@@ -1398,6 +1398,7 @@ class SwatString extends SwatObject
 		$years = $interval->y;
 		$months = $interval->m;
 		$days = $interval->d;
+		$hours = $interval->h;
 		$minutes = $interval->i;
 		$seconds = $interval->s;
 
