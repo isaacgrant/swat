@@ -1383,7 +1383,7 @@ class SwatString extends SwatObject
 	{
 		$interval = SwatDate::getIntervalFromSeconds($seconds);
 
-		if ($interval_parts == '') {
+		if ($interval_parts === null) {
 			$interval_parts =
 				SwatDate::DI_YEARS   |
 				SwatDate::DI_MONTHS  |
