@@ -1445,39 +1445,6 @@ class SwatString extends SwatObject
 	}
 
 	// }}}
-	// {{{ public static function toHumanReadableTimePeriodString()
-
-	/**
-	 * Gets a human-readable string representing a time period from an array of human
-	 * readable date parts.
-	 *
-	 * This method formats seconds as a time period. Given an example value
-	 * of 161740805, the formatted value "5 years, 3 months, 2 days and 5
-	 * seconds" is returned.
-	 *
-	 * As this method applies on seconds, no time zone considerations are
-	 * made. Years are assumed to be 365 days. Months are assumed to be 30
-	 * 30 days.
-	 *
-	 * @param array $parts array of date period parts.
-	 *                      @see SwatString::getHumanReadableTimePeriodParts()
-	 * @param boolean $largest_part optional. If true, only the largest
-	 *                               matching date part is returned. For the
-	 *                               above example, "5 years" is returned.
-	 *
-	 * @return string A human-readable time period
-	 */
-	public static function toHumanReadableTimePeriodString(array $parts,
-		$largest_part = false)
-	{
-		if ($largest_part && count($parts) > 0) {
-			$parts = array_splice($parts, 0, 1);
-		}
-
-		return self::toList($parts);
-	}
-
-	// }}}
 	// {{{ public static function toHumanReadableTimePeriod()
 
 	/**
@@ -1587,7 +1554,7 @@ class SwatString extends SwatObject
 		);
 
 		if (isset($parts['weeks']) && isset($parts['days'])) {
-			$parts['weeksanddays'] = self::toList(
+			$parts['weeks-and-days'] = self::toList(
 				array(
 					$parts['weeks'],
 					$parts['days'],
@@ -1937,6 +1904,39 @@ class SwatString extends SwatObject
 		}
 
 		return $escaped;
+	}
+
+	// }}}
+	// {{{ protected static function toHumanReadableTimePeriodString()
+
+	/**
+	 * Gets a human-readable string representing a time period from an array of human
+	 * readable date parts.
+	 *
+	 * This method formats seconds as a time period. Given an example value
+	 * of 161740805, the formatted value "5 years, 3 months, 2 days and 5
+	 * seconds" is returned.
+	 *
+	 * As this method applies on seconds, no time zone considerations are
+	 * made. Years are assumed to be 365 days. Months are assumed to be 30
+	 * 30 days.
+	 *
+	 * @param array $parts array of date period parts.
+	 *                      @see SwatString::getHumanReadableTimePeriodParts()
+	 * @param boolean $largest_part optional. If true, only the largest
+	 *                               matching date part is returned. For the
+	 *                               above example, "5 years" is returned.
+	 *
+	 * @return string A human-readable time period
+	 */
+	protected static function toHumanReadableTimePeriodString(array $parts,
+		$largest_part = false)
+	{
+		if ($largest_part && count($parts) > 0) {
+			$parts = array($parts[0]);
+		}
+
+		return self::toList($parts);
 	}
 
 	// }}}
