@@ -192,8 +192,8 @@ class SwatDate extends DateTime implements Serializable
 	// {{{ date interval part constants
 
 	/**
-	 * A set of bitwise contants to control which parts of the interval we want when
-	 * returning a DateInterval.
+	 * A set of bitwise contants to control which parts of the interval we want
+	 * when returning a DateInterval.
 	 *
 	 * @see SwatString::getHumanReadableTimePeriodParts()
 	 */
@@ -582,17 +582,18 @@ class SwatDate extends DateTime implements Serializable
 	 * two dates
 	 *
 	 * This method formats the date diff as the difference of seconds,
-	 * minutes, hours, or days and weeks between two dates. The closest major date
-	 * part will be used for the return value. For example, a difference of
+	 * minutes, hours, or days and weeks between two dates. The closest major
+	 * date part will be used for the return value. For example, a difference of
 	 * 50 seconds returns "50 seconds" while a difference of 90 seconds
 	 * returns "1 minute".
 	 *
 	 * @param SwatDate $compare_date Optional date to compare to. If null, the
 	 *                               the current date/time will be used.
 	 *
-	 * @return string A human-readable date diff
+	 * @return string A human-readable date diff.
 	 */
-	public function getHumanReadableDateDiffWithWeeks(SwatDate $compare_date = null)
+	public function getHumanReadableDateDiffWithWeeks(
+		SwatDate $compare_date = null)
 	{
 		if ($compare_date === null) {
 			$compare_date = new SwatDate();
@@ -610,8 +611,8 @@ class SwatDate extends DateTime implements Serializable
 	 * two dates
 	 *
 	 * This method formats the date diff as the difference of seconds,
-	 * minutes, hours, or days and weeks between two dates. The closest major date
-	 * part will be used for the return value. For example, a difference of
+	 * minutes, hours, or days and weeks between two dates. The closest major
+	 * date part will be used for the return value. For example, a difference of
 	 * 50 seconds returns "50 seconds" while a difference of 90 seconds
 	 * returns "1 minute".
 	 *
@@ -628,7 +629,7 @@ class SwatDate extends DateTime implements Serializable
 		}
 
 		$seconds = $compare_date->getTime() - $this->getTime();
-		return SwatString::toHumanReadableTimePeriodWithWeeksAndDays($seconds, true);
+		return SwatString::toHumanReadableTimePeriodWithWeeksAndDays($seconds);
 	}
 
 	// }}}
