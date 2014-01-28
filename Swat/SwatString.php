@@ -1504,7 +1504,7 @@ class SwatString extends SwatObject
 	 *                               matching date part is returned. For the
 	 *                               above example, "5 years" is returned.
 	 *
-	 * @return string A human-readable time period
+	 * @return string A human-readable time period.
 	 */
 	public static function toHumanReadableTimePeriod($seconds,
 		$largest_part = false)
@@ -1534,7 +1534,7 @@ class SwatString extends SwatObject
 	 *                               matching date part is returned. For the
 	 *                               above example, "5 years" is returned.
 	 *
-	 * @return string A human-readable time period
+	 * @return string A human-readable time period.
 	 */
 	public static function toHumanReadableTimePeriodWithWeeks($seconds,
 		$largest_part = false)
@@ -1575,7 +1575,7 @@ class SwatString extends SwatObject
 	 *                               matching date part is returned. For the
 	 *                               above example, "5 years" is returned.
 	 *
-	 * @return string A human-readable time period
+	 * @return string A human-readable time period.
 	 */
 	public static function toHumanReadableTimePeriodWithWeeksAndDays($seconds,
 		$largest_part = false)
@@ -1966,7 +1966,7 @@ class SwatString extends SwatObject
 	 *                               matching date part is returned. For the
 	 *                               above example, "5 years" is returned.
 	 *
-	 * @return string A human-readable time period
+	 * @return string A human-readable time period.
 	 */
 	protected static function toHumanReadableTimePeriodString(array $parts,
 		$largest_part = false)

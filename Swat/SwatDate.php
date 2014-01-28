@@ -562,7 +562,7 @@ class SwatDate extends DateTime implements Serializable
 	 * @param SwatDate $compare_date Optional date to compare to. If null, the
 	 *                               the current date/time will be used.
 	 *
-	 * @return string A human-readable date diff
+	 * @return string A human-readable date diff.
 	 */
 	public function getHumanReadableDateDiff(SwatDate $compare_date = null)
 	{
@@ -619,7 +619,7 @@ class SwatDate extends DateTime implements Serializable
 	 * @param SwatDate $compare_date Optional date to compare to. If null, the
 	 *                               the current date/time will be used.
 	 *
-	 * @return string A human-readable date diff
+	 * @return string A human-readable date diff.
 	 */
 	public function getHumanReadableDateDiffWithWeeksAndDays(
 		SwatDate $compare_date = null)
