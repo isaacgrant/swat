@@ -1381,27 +1381,51 @@ class SwatString extends SwatObject
 	public static function getHumanReadableTimePeriodParts($seconds,
 		$interval_parts = null)
 	{
-		$interval = SwatDate::getIntervalFromSeconds($seconds, $interval_parts);
+		$interval = SwatDate::getIntervalFromSeconds($seconds);
+
+		if ($interval_parts == '') {
+			$interval_parts =
+				SwatDate::DI_YEARS   |
+				SwatDate::DI_MONTHS  |
+				SwatDate::DI_DAYS    |
+				SwatDate::DI_HOURS   |
+				SwatDate::DI_MINUTES |
+				SwatDate::DI_SECONDS;
+		}
+
+		// DateInterval cannot have overflow values for each part, so store these in local
+		// variables.
+		$years = $interval->y;
+		$months = $interval->m;
+		$days = $interval->d;
+		$minutes = $interval->i;
+		$seconds = $interval->s;
 
 		$parts = array();
 
-		if ($interval->y > 0) {
-			$parts['years'] = sprintf(
-				Swat::ngettext('%s year', '%s years', $interval->y),
-				$interval->y
-			);
+		if ($years > 0) {
+			if ($interval_parts & SwatDate::DI_YEARS) {
+				$parts['years'] = sprintf(
+					Swat::ngettext('%s year', '%s years', $years),
+					$years
+				);
+			} else {
+				$months+= $years*12;
+			}
 		}
 
-		if ($interval->m > 0) {
-			$parts['months'] = sprintf(
-				Swat::ngettext('%s month', '%s months', $interval->m),
-				$interval->m
-			);
+		if ($months > 0) {
+			if ($interval_parts & SwatDate::DI_MONTHS) {
+				$parts['months'] = sprintf(
+					Swat::ngettext('%s month', '%s months', $interval->m),
+					$interval->m
+				);
+			} else {
+				$days+= $months*30;
+			}
 		}
 
-		if ($interval->d > 0) {
-			$days = $interval->d;
-
+		if ($days > 0) {
 			if ($interval_parts & SwatDate::DI_WEEKS &&
 				$days >= 7) {
 
@@ -1414,31 +1438,47 @@ class SwatString extends SwatObject
 				);
 			}
 
-			$parts['days'] = sprintf(
-				Swat::ngettext('%s day', '%s days', $days),
-				$days
-			);
+			if ($days > 0) {
+				if ($interval_parts & SwatDate::DI_DAYS) {
+					$parts['days'] = sprintf(
+						Swat::ngettext('%s day', '%s days', $days),
+						$days
+					);
+				} else {
+					$hours+= $days*24;
+				}
+			}
 		}
 
-		if ($interval->h > 0) {
-			$parts['hours'] = sprintf(
-				Swat::ngettext('%s hour', '%s hours', $interval->h),
-				$interval->h
-			);
+		if ($hours > 0) {
+			if ($interval_parts & SwatDate::DI_HOURS) {
+				$parts['hours'] = sprintf(
+					Swat::ngettext('%s hour', '%s hours', $hours),
+					$hours
+				);
+			} else {
+				$minutes+= $hours*60;
+			}
 		}
 
-		if ($interval->i > 0) {
-			$parts['minutes'] = sprintf(
-				Swat::ngettext('%s minute', '%s minutes', $interval->i),
-				$interval->i
-			);
+		if ($minutes > 0) {
+			if ($interval_parts & SwatDate::DI_MINUTES) {
+				$parts['minutes'] = sprintf(
+					Swat::ngettext('%s minute', '%s minutes', $minutes),
+					$minutes
+				);
+			} else {
+				$seconds+= $minutes*60;
+			}
 		}
 
-		if ($interval->s > 0) {
-			$parts['seconds'] = sprintf(
-				Swat::ngettext('%s second', '%s seconds', $interval->s),
-				$interval->s
-			);
+		if ($seconds > 0) {
+			if ($interval_parts & SwatDate::DI_SECONDS) {
+				$parts['seconds'] = sprintf(
+					Swat::ngettext('%s second', '%s seconds', $seconds),
+					$seconds
+				);
+			}
 		}
 
 		return $parts;

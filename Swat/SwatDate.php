@@ -195,7 +195,7 @@ class SwatDate extends DateTime implements Serializable
 	 * A set of bitwise contants to control which parts of the interval we want when
 	 * returning a DateInterval.
 	 *
-	 * @see SwatDate::getIntervalFromSeconds()
+	 * @see SwatString::getHumanReadableTimePeriodParts()
 	 */
 	const DI_YEARS   = 1;
 	const DI_MONTHS  = 2;
@@ -920,76 +920,38 @@ class SwatDate extends DateTime implements Serializable
 	 * @return DateInterval a date interval with the relevant parts
 	 *                         set.
 	 */
-	public static function getIntervalFromSeconds($seconds, $interval_parts = null)
+	public static function getIntervalFromSeconds($seconds)
 	{
-		if ($interval_parts == '') {
-			$interval_parts =
-				self::DI_YEARS   |
-				self::DI_MONTHS  |
-				self::DI_DAYS    |
-				self::DI_HOURS   |
-				self::DI_MINUTES |
-				self::DI_SECONDS;
-		}
-
 		// don't care about micro-seconds.
 		$seconds = floor(abs($seconds));
 
 		$minute = 60;
 		$hour = $minute * 60;
 		$day = $hour * 24;
-		$week = $day * 7;
 		$month = $day * 30;
 		$year = $day * 365;
 
 		$interval_spec = 'P';
 
-		if (
-			$interval_parts & self::DI_YEARS &&
-			$seconds > $year
-		) {
+		if ($seconds > $year) {
 			$years = floor($seconds / $year);
 			$seconds -= $year * $years;
 			$interval_spec.= $years.'Y';
 		}
 
-		if (
-			$interval_parts & self::DI_MONTHS &&
-			$seconds > $month
-		) {
+		if ($seconds > $month) {
 			$months = floor($seconds / $month);
 			$seconds -= $month * $months;
 			$interval_spec.= $months.'M';
 		}
 
-		if (
-			$interval_parts & self::DI_WEEKS &&
-			$seconds > $week
-		) {
-			$weeks = floor($seconds / $week);
-			$seconds -= $week * $weeks;
-			$days = $weeks * 7;
-		}
-
-		if (
-			$interval_parts & self::DI_DAYS &&
-			$seconds > $day
-		) {
-			if (!isset($days)) {
-				$days = 0;
-			}
-
-			$days+= floor($seconds / $day);
+		if ($seconds > $day) {
+			$days = floor($seconds / $day);
 			$seconds -= $day * $days;
 			$interval_spec.= $days.'D';
 		}
 
-		if ($seconds > 0 &&
-			(
-				$interval_parts & self::DI_SECONDS ||
-				$interval_spec === 'P'
-			)
-		) {
+		if ($seconds > 0 || $interval_spec === 'P') {
 			$interval_spec.= 'T';
 
 			if ($seconds > $hour) {
