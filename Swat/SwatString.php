@@ -1588,14 +1588,14 @@ class SwatString extends SwatObject
 		);
 
 		if (isset($parts['weeks']) && isset($parts['days'])) {
-			$parts['weeks-and-days'] = self::toList(
+			// reuse the weeks array key, to keep it in the correct position.
+			$parts['weeks'] = self::toList(
 				array(
 					$parts['weeks'],
 					$parts['days'],
 				)
 			);
 
-			unset($parts['weeks']);
 			unset($parts['days']);
 		}
 
