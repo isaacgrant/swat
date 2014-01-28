@@ -1371,8 +1371,7 @@ class SwatString extends SwatObject
 	 * </code>
 	 *
 	 * As this method applies on seconds, no time zone considerations are
-	 * made. Years are assumed to be 365 days. Months are assumed to be 30
-	 * 30 days.
+	 * made. Years are assumed to be 365 days. Months are assumed to be 30 days.
 	 *
 	 * @param integer $seconds seconds to format.
 	 * @param integer $interval_parts inclusive or bitwise set of parts to
@@ -1498,8 +1497,7 @@ class SwatString extends SwatObject
 	 * seconds" is returned.
 	 *
 	 * As this method applies on seconds, no time zone considerations are
-	 * made. Years are assumed to be 365 days. Months are assumed to be 30
-	 * 30 days.
+	 * made. Years are assumed to be 365 days. Months are assumed to be 30 days.
 	 *
 	 * @param integer $seconds seconds to format.
 	 * @param boolean $largest_part optional. If true, only the largest
@@ -1529,8 +1527,7 @@ class SwatString extends SwatObject
 	 * weeks in the same string can be confusing for people to parse.
 	 *
 	 * As this method applies on seconds, no time zone considerations are
-	 * made. Years are assumed to be 365 days. Months are assumed to be 30
-	 * 30 days.
+	 * made. Years are assumed to be 365 days. Months are assumed to be 30 days.
 	 *
 	 * @param integer $seconds seconds to format.
 	 * @param boolean $largest_part optional. If true, only the largest
@@ -1571,8 +1568,7 @@ class SwatString extends SwatObject
 	 * weeks in the same string can be confusing for people to parse.
 	 *
 	 * As this method applies on seconds, no time zone considerations are
-	 * made. Years are assumed to be 365 days. Months are assumed to be 30
-	 * 30 days.
+	 * made. Years are assumed to be 365 days. Months are assumed to be 30 days.
 	 *
 	 * @param integer $seconds seconds to format.
 	 * @param boolean $largest_part optional. If true, only the largest
@@ -1962,8 +1958,7 @@ class SwatString extends SwatObject
 	 * seconds" is returned.
 	 *
 	 * As this method applies on seconds, no time zone considerations are
-	 * made. Years are assumed to be 365 days. Months are assumed to be 30
-	 * 30 days.
+	 * made. Years are assumed to be 365 days. Months are assumed to be 30 days.
 	 *
 	 * @param array $parts array of date period parts.
 	 *                      @see SwatString::getHumanReadableTimePeriodParts()
