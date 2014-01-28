@@ -1966,7 +1966,7 @@ class SwatString extends SwatObject
 		$largest_part = false)
 	{
 		if ($largest_part && count($parts) > 0) {
-			$parts = array($parts[0]);
+			$parts = array(reset($parts));
 		}
 
 		return self::toList($parts);
