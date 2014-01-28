@@ -1354,7 +1354,8 @@ class SwatString extends SwatObject
 	// {{{ public static function getHumanReadableTimePeriodParts()
 
 	/**
-	 * Gets the parts to construct a human-readable string representing a time period.
+	 * Gets the parts to construct a human-readable string representing a time
+	 * period.
 	 *
 	 * This method formats seconds as a time period. Given an example value
 	 * of 161740805, the following key=>value array is returned.
@@ -1374,7 +1375,8 @@ class SwatString extends SwatObject
 	 * 30 days.
 	 *
 	 * @param integer $seconds seconds to format.
-	 * @param integer $interval_parts inclusive or bitwise set of parts to return.
+	 * @param integer $interval_parts inclusive or bitwise set of parts to
+	 *                                 return.
 	 *
 	 * @return array An array of human-readable time period string parts.
 	 */
@@ -1393,8 +1395,8 @@ class SwatString extends SwatObject
 				SwatDate::DI_SECONDS;
 		}
 
-		// DateInterval cannot have overflow values for each part, so store these in local
-		// variables.
+		// DateInterval cannot have overflow values for each part, so store
+		// these in local variables.
 		$years = $interval->y;
 		$months = $interval->m;
 		$days = $interval->d;
@@ -1518,12 +1520,13 @@ class SwatString extends SwatObject
 	// {{{ public static function toHumanReadableTimePeriodWithWeeks()
 
 	/**
-	 * Gets a human-readable string representing a time period that includes weeks.
+	 * Gets a human-readable string representing a time period that includes
+	 * weeks.
 	 *
 	 * This method formats seconds as a time period. Given an example value
 	 * of 161740805, the formatted value "5 years, 12 weeks, 2 days and 5
-	 * seconds" is returned. Months are not returned as combining months and weeks
-	 * in the same string can be confusing for people to parse.
+	 * seconds" is returned. Months are not returned as combining months and
+	 * weeks in the same string can be confusing for people to parse.
 	 *
 	 * As this method applies on seconds, no time zone considerations are
 	 * made. Years are assumed to be 365 days. Months are assumed to be 30
@@ -1559,13 +1562,13 @@ class SwatString extends SwatObject
 	// {{{ public static function toHumanReadableTimePeriodWithWeeksAndDays()
 
 	/**
-	 * Gets a human-readable string representing a time period that includes weeks and
-	 * days as one time period part.
+	 * Gets a human-readable string representing a time period that includes
+	 * weeks and days as one time period part.
 	 *
 	 * This method formats seconds as a time period. Given an example value
 	 * of 161740805, the formatted value "5 years, 12 weeks, 2 days and 5
-	 * seconds" is returned. Months are not returned as combining months and weeks
-	 * in the same string can be confusing for people to parse.
+	 * seconds" is returned. Months are not returned as combining months and
+	 * weeks in the same string can be confusing for people to parse.
 	 *
 	 * As this method applies on seconds, no time zone considerations are
 	 * made. Years are assumed to be 365 days. Months are assumed to be 30
@@ -1951,8 +1954,8 @@ class SwatString extends SwatObject
 	// {{{ protected static function toHumanReadableTimePeriodString()
 
 	/**
-	 * Gets a human-readable string representing a time period from an array of human
-	 * readable date parts.
+	 * Gets a human-readable string representing a time period from an array of
+	 * human readable date parts.
 	 *
 	 * This method formats seconds as a time period. Given an example value
 	 * of 161740805, the formatted value "5 years, 3 months, 2 days and 5
