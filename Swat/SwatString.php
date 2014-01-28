@@ -1510,7 +1510,6 @@ class SwatString extends SwatObject
 		$largest_part = false)
 	{
 		$parts = self::getHumanReadableTimePeriodParts($seconds);
-
 		return self::toHumanReadableTimePeriodString($parts, $largest_part);
 	}
 
