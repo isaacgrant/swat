@@ -915,8 +915,7 @@ class SwatDate extends DateTime implements Serializable
 	 * to be 30 days.
 	 *
 	 * @param integer $seconds seconds for which to get interval.
- 	 * @param integer $interval_parts inclusive or bitwise set of parts to return.
- 	 *
+	 *
 	 * @return DateInterval a date interval with the relevant parts
 	 *                         set.
 	 */
