@@ -1410,7 +1410,7 @@ class SwatString extends SwatObject
 					$years
 				);
 			} else {
-				$months+= $years*12;
+				$months += $years * 12;
 			}
 		}
 
@@ -1421,7 +1421,7 @@ class SwatString extends SwatObject
 					$interval->m
 				);
 			} else {
-				$days+= $months*30;
+				$days += $months * 30;
 			}
 		}
 
@@ -1445,7 +1445,7 @@ class SwatString extends SwatObject
 						$days
 					);
 				} else {
-					$hours+= $days*24;
+					$hours += $days * 24;
 				}
 			}
 		}
@@ -1457,7 +1457,7 @@ class SwatString extends SwatObject
 					$hours
 				);
 			} else {
-				$minutes+= $hours*60;
+				$minutes += $hours * 60;
 			}
 		}
 
@@ -1468,7 +1468,7 @@ class SwatString extends SwatObject
 					$minutes
 				);
 			} else {
-				$seconds+= $minutes*60;
+				$seconds += $minutes * 60;
 			}
 		}
 
