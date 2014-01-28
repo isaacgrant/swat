@@ -13,7 +13,7 @@ require_once 'Swat/Swat.php';
  * - localization
  *
  * @package   Swat
- * @copyright 2005-2013 silverorange
+ * @copyright 2005-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDate extends DateTime implements Serializable
@@ -187,6 +187,23 @@ class SwatDate extends DateTime implements Serializable
 	 * @see SwatDate::getISO8601()
 	 */
 	const ISO_TIME_ZONE = 4;
+
+	// }}}
+	// {{{ date interval part constants
+
+	/**
+	 * A set of bitwise contants to control which parts of the interval we want when
+	 * returning a DateInterval.
+	 *
+	 * @see SwatDate::getIntervalFromSeconds()
+	 */
+	const DI_YEARS   = 1;
+	const DI_MONTHS  = 2;
+	const DI_WEEKS   = 4;
+	const DI_DAYS    = 8;
+	const DI_HOURS   = 16;
+	const DI_MINUTES = 32;
+	const DI_SECONDS = 64;
 
 	// }}}
 	// {{{ protected properties
@@ -558,6 +575,63 @@ class SwatDate extends DateTime implements Serializable
 	}
 
 	// }}}
+	// {{{ public function getHumanReadableDateDiffWithWeeks()
+
+	/**
+	 * Get a human-readable string representing the difference between
+	 * two dates
+	 *
+	 * This method formats the date diff as the difference of seconds,
+	 * minutes, hours, or days and weeks between two dates. The closest major date
+	 * part will be used for the return value. For example, a difference of
+	 * 50 seconds returns "50 seconds" while a difference of 90 seconds
+	 * returns "1 minute".
+	 *
+	 * @param SwatDate $compare_date Optional date to compare to. If null, the
+	 *                               the current date/time will be used.
+	 *
+	 * @return string A human-readable date diff
+	 */
+	public function getHumanReadableDateDiffWithWeeks(SwatDate $compare_date = null)
+	{
+		if ($compare_date === null) {
+			$compare_date = new SwatDate();
+		}
+
+		$seconds = $compare_date->getTime() - $this->getTime();
+		return SwatString::toHumanReadableTimePeriodWithWeeks($seconds, true);
+	}
+
+	// }}}
+	// {{{ public function getHumanReadableDateDiffWithWeeksAndDays()
+
+	/**
+	 * Get a human-readable string representing the difference between
+	 * two dates
+	 *
+	 * This method formats the date diff as the difference of seconds,
+	 * minutes, hours, or days and weeks between two dates. The closest major date
+	 * part will be used for the return value. For example, a difference of
+	 * 50 seconds returns "50 seconds" while a difference of 90 seconds
+	 * returns "1 minute".
+	 *
+	 * @param SwatDate $compare_date Optional date to compare to. If null, the
+	 *                               the current date/time will be used.
+	 *
+	 * @return string A human-readable date diff
+	 */
+	public function getHumanReadableDateDiffWithWeeksAndDays(
+		SwatDate $compare_date = null)
+	{
+		if ($compare_date === null) {
+			$compare_date = new SwatDate();
+		}
+
+		$seconds = $compare_date->getTime() - $this->getTime();
+		return SwatString::toHumanReadableTimePeriodWithWeeksAndDays($seconds, true);
+	}
+
+	// }}}
 	// {{{ public static function getFormatById()
 
 	/**
@@ -841,42 +915,81 @@ class SwatDate extends DateTime implements Serializable
 	 * to be 30 days.
 	 *
 	 * @param integer $seconds seconds for which to get interval.
-	 *
+ 	 * @param integer $interval_parts inclusive or bitwise set of parts to return.
+ 	 *
 	 * @return DateInterval a date interval with the relevant parts
 	 *                         set.
 	 */
-	public static function getIntervalFromSeconds($seconds)
+	public static function getIntervalFromSeconds($seconds, $interval_parts = null)
 	{
+		if ($interval_parts == '') {
+			$interval_parts =
+				self::DI_YEARS   |
+				self::DI_MONTHS  |
+				self::DI_DAYS    |
+				self::DI_HOURS   |
+				self::DI_MINUTES |
+				self::DI_SECONDS;
+		}
+
 		// don't care about micro-seconds.
 		$seconds = floor(abs($seconds));
 
 		$minute = 60;
 		$hour = $minute * 60;
 		$day = $hour * 24;
+		$week = $day * 7;
 		$month = $day * 30;
 		$year = $day * 365;
 
 		$interval_spec = 'P';
 
-		if ($seconds > $year) {
+		if (
+			$interval_parts & self::DI_YEARS &&
+			$seconds > $year
+		) {
 			$years = floor($seconds / $year);
 			$seconds -= $year * $years;
 			$interval_spec.= $years.'Y';
 		}
 
-		if ($seconds > $month) {
+		if (
+			$interval_parts & self::DI_MONTHS &&
+			$seconds > $month
+		) {
 			$months = floor($seconds / $month);
 			$seconds -= $month * $months;
 			$interval_spec.= $months.'M';
 		}
 
-		if ($seconds > $day) {
-			$days = floor($seconds / $day);
+		if (
+			$interval_parts & self::DI_WEEKS &&
+			$seconds > $week
+		) {
+			$weeks = floor($seconds / $week);
+			$seconds -= $week * $weeks;
+			$days = $weeks * 7;
+		}
+
+		if (
+			$interval_parts & self::DI_DAYS &&
+			$seconds > $day
+		) {
+			if (!isset($days)) {
+				$days = 0;
+			}
+
+			$days+= floor($seconds / $day);
 			$seconds -= $day * $days;
 			$interval_spec.= $days.'D';
 		}
 
-		if ($seconds > 0 || $interval_spec === 'P') {
+		if ($seconds > 0 &&
+			(
+				$interval_parts & self::DI_SECONDS ||
+				$interval_spec === 'P'
+			)
+		) {
 			$interval_spec.= 'T';
 
 			if ($seconds > $hour) {
