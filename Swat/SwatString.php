@@ -1559,25 +1559,20 @@ class SwatString extends SwatObject
 
 	/**
 	 * Gets a human-readable string representing a time period that includes
-	 * weeks and days as one time period part.
+	 * weeks and days as one time period part, and always returns the largest
+	 * part only.
 	 *
 	 * This method formats seconds as a time period. Given an example value
-	 * of 161740805, the formatted value "5 years, 12 weeks, 2 days and 5
-	 * seconds" is returned. Months are not returned as combining months and
-	 * weeks in the same string can be confusing for people to parse.
+	 * of 7435400, the formatted value "12 weeks, 2 days" is returned.
 	 *
 	 * As this method applies on seconds, no time zone considerations are
 	 * made. Years are assumed to be 365 days. Months are assumed to be 30 days.
 	 *
 	 * @param integer $seconds seconds to format.
-	 * @param boolean $largest_part optional. If true, only the largest
-	 *                               matching date part is returned. For the
-	 *                               above example, "5 years" is returned.
 	 *
 	 * @return string A human-readable time period.
 	 */
-	public static function toHumanReadableTimePeriodWithWeeksAndDays($seconds,
-		$largest_part = false)
+	public static function toHumanReadableTimePeriodWithWeeksAndDays($seconds)
 	{
 		$interval_parts =
 			SwatDate::DI_YEARS   |
@@ -1604,7 +1599,7 @@ class SwatString extends SwatObject
 			unset($parts['days']);
 		}
 
-		return self::toHumanReadableTimePeriodString($parts, $largest_part);
+		return self::toHumanReadableTimePeriodString($parts, true);
 	}
 
 	// }}}
