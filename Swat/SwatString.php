@@ -1412,7 +1412,7 @@ class SwatString extends SwatObject
 					$years
 				);
 			} else {
-				$months += $years * 12;
+				$days += $years * 365;
 			}
 		}
 
